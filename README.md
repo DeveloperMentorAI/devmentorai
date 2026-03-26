@@ -33,8 +33,9 @@
 
 ## 🌐 Live Demo
 <p align="center">
-  🚀 <a href="https://devmentorai.vercel.app"><b>Frontend App</b></a><br><br>
-  ⚙️ <a href="https://devmentorai-7v0o.onrender.com"><b>Backend API</b></a>
+  ⚙️ <a href="https://devmentorai-7v0o.onrender.com"><b>Backend API</b></a><br><br>
+  🚀 <a href="https://devmentorai.vercel.app"><b>Frontend App</b></a>
+
 </p>
 
 ## 🧠 Overview
