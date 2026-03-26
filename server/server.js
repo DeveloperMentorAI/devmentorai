@@ -6,7 +6,12 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://devmentorai.vercel.app"
+  ]
+}));
 app.use(express.json());
 
 // ─── In-memory chat history (per session) ────────────────────────────────────
@@ -14,11 +19,11 @@ const sessions = {}; // sessionId -> [ { role, content }, ... ]
 
 // ─── Supported models ────────────────────────────────────────────────────────
 const AVAILABLE_MODELS = [
-  { id: "openai/gpt-4o-mini",         label: "GPT-4o Mini"       },
-  { id: "openai/gpt-4o",              label: "GPT-4o"            },
-  { id: "anthropic/claude-3-haiku",   label: "Claude 3 Haiku"    },
-  { id: "google/gemini-flash-1.5",    label: "Gemini Flash 1.5"  },
-  { id: "meta-llama/llama-3-8b-instruct", label: "Llama 3 8B"   },
+  { id: "openai/gpt-4o-mini", label: "GPT-4o Mini" },
+  { id: "openai/gpt-4o", label: "GPT-4o" },
+  { id: "anthropic/claude-3-haiku", label: "Claude 3 Haiku" },
+  { id: "google/gemini-flash-1.5", label: "Gemini Flash 1.5" },
+  { id: "meta-llama/llama-3-8b-instruct", label: "Llama 3 8B" },
 ];
 
 // ─── GET /models — return model list to frontend ──────────────────────────────
@@ -84,7 +89,7 @@ app.post("/chat", async (req, res) => {
       try {
         const errData = await response.json();
         errMsg = errData?.error?.message || errMsg;
-      } catch (_) {}
+      } catch (_) { }
       sendEvent({ error: errMsg });
       return res.end();
     }
