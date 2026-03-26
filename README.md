@@ -31,13 +31,11 @@
 
 ---
 
-## 🌍 Live Demo
-
+## 🌐 Live Demo
 <p align="center">
-  🔗 <b>https://devmentorai.vercel.app</b>
+  🚀 <a href="https://devmentorai.vercel.app"><b>Frontend App</b></a><br><br>
+  ⚙️ <a href="https://devmentorai-7v0o.onrender.com"><b>Backend API</b></a>
 </p>
-
----
 
 ## 🧠 Overview
 
