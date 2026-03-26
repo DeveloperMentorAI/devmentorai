@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const SESSION_ID = "user-" + Math.random().toString(36).slice(2, 8);
 
 // ── Markdown renderer ────────────────────────────────────────────────────────
