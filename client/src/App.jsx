@@ -60,7 +60,10 @@ export default function App() {
   const textareaRef = useRef(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/models").then(r => r.json()).then(d => setModels(d.models || [])).catch(() => {});
+    fetch(`${API_URL}/models`)
+      .then(r => r.json())
+      .then(d => setModels(d.models || []))
+      .catch(() => { });
   }, []);
 
   useEffect(() => {
@@ -70,16 +73,28 @@ export default function App() {
   const handleGenerate = async () => {
     const msg = input.trim();
     if (!msg || loading) return;
+
     setMessages(prev => [...prev, { role: "user", content: msg }]);
     setInput("");
-    if (textareaRef.current) { textareaRef.current.style.height = "auto"; }
-    setLoading(true); setStreaming("");
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
+
+    setLoading(true);
+    setStreaming("");
 
     try {
-      const res = await fetch("http://localhost:5000/chat", {
+      const res = await fetch(`${API_URL}/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: msg, sessionId: SESSION_ID, model: selectedModel }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: msg,
+          sessionId: SESSION_ID,
+          model: selectedModel,
+        }),
       });
       if (!res.ok) throw new Error();
       const reader = res.body.getReader();
@@ -97,7 +112,7 @@ export default function App() {
             if (p.error) { full = "⚠ " + p.error; setStreaming(full); break; }
             if (p.token) { full += p.token; setStreaming(full); }
             if (p.done) { setMessages(prev => [...prev, { role: "assistant", content: full }]); setStreaming(""); }
-          } catch (_) {}
+          } catch (_) { }
         }
       }
     } catch {
@@ -232,9 +247,9 @@ export default function App() {
           <div style={{ flex: 1, overflowY: "auto", padding: "0 10px 16px" }}>
             {userMsgs.length === 0
               ? <div style={{ textAlign: "center", color: "var(--text-muted)", fontSize: "13px", marginTop: "32px", lineHeight: 1.6 }}>
-                  <div style={{ fontSize: "24px", marginBottom: "8px", opacity: .4 }}>💬</div>
-                  Start a conversation
-                </div>
+                <div style={{ fontSize: "24px", marginBottom: "8px", opacity: .4 }}>💬</div>
+                Start a conversation
+              </div>
               : [...userMsgs].reverse().map((m, i) => (
                 <div key={i} className="sidebar-item" style={{ padding: "10px 12px", borderRadius: "10px", marginBottom: "4px", background: i === 0 ? "rgba(56,189,248,0.06)" : "transparent", border: `1px solid ${i === 0 ? "rgba(56,189,248,0.2)" : "transparent"}`, cursor: "default" }}>
                   <div style={{ fontSize: "13px", color: i === 0 ? "#e2e8f0" : "#94a3b8", overflow: "hidden", textOverflow: "ellipsis", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", lineHeight: "1.45" }}>{m.content}</div>
@@ -263,7 +278,7 @@ export default function App() {
                 onMouseOver={e => e.currentTarget.style.background = "var(--surface-hover)"}
                 onMouseOut={e => e.currentTarget.style.background = "var(--surface)"}
               >
-                {[0,1,2].map(i => <div key={i} style={{ width: "14px", height: "1.5px", background: "#94a3b8", borderRadius: "2px" }} />)}
+                {[0, 1, 2].map(i => <div key={i} style={{ width: "14px", height: "1.5px", background: "#94a3b8", borderRadius: "2px" }} />)}
               </button>
 
               <div style={{ width: "1px", height: "28px", background: "var(--border)" }} />
@@ -271,7 +286,7 @@ export default function App() {
               <div>
                 <div style={{ fontWeight: 800, fontSize: "16px", letterSpacing: "-0.03em" }} className="gradient-text">AI Assistant</div>
                 <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "1px" }}>
-                  {loading ? <span style={{ color: "#38bdf8" }}>● Generating…</span> : `${messages.filter(m=>m.role==="assistant").length} responses · ${modelLabel}`}
+                  {loading ? <span style={{ color: "#38bdf8" }}>● Generating…</span> : `${messages.filter(m => m.role === "assistant").length} responses · ${modelLabel}`}
                 </div>
               </div>
             </div>
@@ -414,7 +429,7 @@ export default function App() {
                   <kbd style={{ background: "rgba(255,255,255,0.07)", border: "1px solid var(--border)", borderRadius: "4px", padding: "1px 5px", fontSize: "10px" }}>Shift+Enter</kbd> newline
                 </span>
                 <span style={{ fontSize: "11.5px", color: "var(--text-muted)" }}>
-                  {messages.length > 0 && `${Math.ceil(messages.reduce((a,m)=>a+m.content.length,0)/4)} tokens used`}
+                  {messages.length > 0 && `${Math.ceil(messages.reduce((a, m) => a + m.content.length, 0) / 4)} tokens used`}
                 </span>
               </div>
             </div>
