@@ -223,7 +223,7 @@ export default function App() {
           <div style={{ padding: "24px 20px 16px", borderBottom: "1px solid var(--border)", flexShrink: 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
               <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "linear-gradient(135deg,#38bdf8,#818cf8)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", flexShrink: 0 }}>✦</div>
-              <span style={{ fontWeight: 800, fontSize: "15px", letterSpacing: "-0.02em" }} className="gradient-text">NeuralChat</span>
+              <span style={{ fontWeight: 800, fontSize: "15px", letterSpacing: "-0.02em" }} className="gradient-text">Neural Chat</span>
             </div>
             <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "6px", marginLeft: "38px" }}>Session · <span style={{ color: "#38bdf8", fontFamily: "monospace" }}>{SESSION_ID}</span></div>
           </div>
@@ -284,7 +284,7 @@ export default function App() {
               <div style={{ width: "1px", height: "28px", background: "var(--border)" }} />
 
               <div>
-                <div style={{ fontWeight: 800, fontSize: "16px", letterSpacing: "-0.03em" }} className="gradient-text">AI Assistant</div>
+                <div style={{ fontWeight: 800, fontSize: "16px", letterSpacing: "-0.03em" }} className="gradient-text">DevMentor AI</div>
                 <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "1px" }}>
                   {loading ? <span style={{ color: "#38bdf8" }}>● Generating…</span> : `${messages.filter(m => m.role === "assistant").length} responses · ${modelLabel}`}
                 </div>
